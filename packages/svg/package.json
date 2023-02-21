@@ -1,0 +1,19 @@
+{
+  "name": "svelte3-icons-svg",
+  "version": "1.0.0",
+  "description": "SVG icon for Svelte Icons collection",
+  "keywords": [
+    "icon",
+    "svg"
+  ],
+  "license": "MIT",
+  "files": [ 
+    "*.svg"
+  ],
+  "scripts": {
+    "optimize": "svgo -f . -o ."
+  },
+  "devDependencies": {
+    "svgo": "^2.8.0"
+  }
+}

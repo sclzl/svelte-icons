@@ -1,0 +1,45 @@
+{
+  "name": "svelte3-icons",
+  "version": "1.0.0",
+  "description": "svelte component icons",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "svelte": "./src/index.js",
+  "type": "module",
+  "types": "dist/types/index.d.ts",
+  "keywords": ["icon", "svelte"],
+  "author": "",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run buildicon && rollup -c && npm run buildtypes",
+    "buildicon": "tsx ./build/build.ts",
+    "buildtypes": "tsx ./build/move.ts",
+    "clean": "rimraf ./dist && rimraf ./src/components",
+    "types": "tsc --emitDeclarationOnly --outDir dist"
+  },
+  "peerDependencies": {
+    "svelte": "^3.55.1"
+  },
+  "devDependencies": {
+    "@pnpm/find-workspace-dir": "^5.0.1",
+    "@pnpm/find-workspace-packages": "^5.0.33",
+    "@pnpm/logger": "^5.0.0",
+    "@tsconfig/svelte": "^3.0.0",
+    "camelcase": "^7.0.1",
+    "chalk": "^5.2.0",
+    "consola": "^2.15.3",
+    "fast-glob": "^3.2.12",
+    "npm-run-all": "^4.1.5",
+    "svelte": "^3.55.1",
+    "svelte-check": "^3.0.3",
+    "svelte-preprocess": "^5.0.1",
+    "svelte-strip": "^1.0.3",
+    "tslib": "^2.5.0",
+    "tsx": "^3.12.3",
+    "typescript": "^4.9.5"
+  }
+}
