@@ -36,7 +36,9 @@ const transformComponent = (filepath: string) => {
     return new Promise<string>((resolve) => {
         const { filename } = getName(filepath);
         fs.readFile(filepath, 'utf8', (err, data) => {
-            data = data.replace("<svg", "<svg {...$$$restProps}");
+            const m = data.match(/<svg ([^>]*)>/);
+            const len = m ? m[1].length : 0;
+            data = data.slice(0, len+5) + " {...$$restProps}" + data.slice(len+5);
             fs.writeFile(path.join(componentsPath, `${filename}.svelte`), data, "utf-8", ()=> {
                 resolve("");
             });
@@ -46,17 +48,17 @@ const transformComponent = (filepath: string) => {
 
 const createIndexFile = (files: string[]) => {
     let content = "";
-    let componentTypes = "import type { ComponentType } from 'svelte';\n";
-    let indexContent = 'export * from "./components";\nimport * as icons from "./components";\nexport { icons }';
-    files.forEach((file, index) => {
+    let componentTypes = `import type { ComponentType, SvelteComponentTyped } from 'svelte';
+import { SVGAttributes } from 'svelte/elements';
+type SvgProps = ComponentType<SvelteComponentTyped<SVGAttributes<any>>>;
+`;
+    files.forEach((file) => {
         const { filename, componentname } = getName(file);
         content += `export { default as ${componentname} } from './${filename}.svelte'\n`;
-        componentTypes += `export const ${componentname}: ComponentType;\n`;
+        componentTypes += `export const ${componentname}: SvgProps;\n`;
     });
     fs.writeFileSync(path.join(componentsPath, "index.js"), content, "utf-8");
-    fs.writeFileSync(path.join(srcPath, "index.js"), indexContent, "utf-8");
-    fs.writeFileSync(path.join(typesComponentsPath, "index.d.ts"), componentTypes, "utf-8");
-    fs.writeFileSync(path.join(typesPath, "index.d.ts"), indexContent, "utf-8");
+    fs.writeFileSync(path.join(typesPath, "components.d.ts"), componentTypes, "utf-8");
 }
 
 consola.info(chalk.blue('generating svelte components types...'));
@@ -66,7 +68,6 @@ checkDir(componentsPath);
 const files =  await getSvgFiles();
 
 checkDir(typesPath);
-checkDir(typesComponentsPath);
 
 await Promise.all(files.map(file => transformComponent(file)));
 

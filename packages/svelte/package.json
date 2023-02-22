@@ -1,6 +1,6 @@
 {
   "name": "svelte3-icons",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "svelte component icons",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -14,12 +14,16 @@
     "dist",
     "src"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sclzl/svelte-icons.git",
+    "directory": "packages/svelte"
+  },
   "scripts": {
     "build": "npm run clean && npm run buildicon && rollup -c && npm run buildtypes",
     "buildicon": "tsx ./build/build.ts",
     "buildtypes": "tsx ./build/move.ts",
-    "clean": "rimraf ./dist && rimraf ./src/components",
-    "types": "tsc --emitDeclarationOnly --outDir dist"
+    "clean": "rimraf ./dist && rimraf ./src/components && rimraf ./src/types/components"
   },
   "peerDependencies": {
     "svelte": "^3.55.1"

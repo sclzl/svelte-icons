@@ -4,6 +4,8 @@ import resolve from '@rollup/plugin-node-resolve'
 import esbuild from 'rollup-plugin-esbuild'
 import commonjs from '@rollup/plugin-commonjs'
 import terser from '@rollup/plugin-terser'
+import dts from 'rollup-plugin-dts'
+import css from 'rollup-plugin-css-only'
 
 export default [
     {
@@ -22,7 +24,15 @@ export default [
               target: 'node14',
               minify: true
             }),
+            css({output: 'index.css'})
             // terser(),
         ],
     },
+    // {
+    //     input: './src/types/index.d.ts',
+    //     output: [{ file: "dist/es/index.d.ts", format: 'es' }],
+    //     plugins: [
+    //         dts()
+    //     ],
+    // },
 ]

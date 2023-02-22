@@ -28,6 +28,6 @@ const copyFiles = (oringinPath: string, targetPath: string) => {
 consola.info(chalk.blue('generating svelte components...'));
 
 copyFiles(srcPath, typesPath);
-execSync(`rm -rf ${srcPath}`);
+// execSync(`rm -rf ${srcPath}`);
 
 consola.info(chalk.blue('svelte components is ended'));

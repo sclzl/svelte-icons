@@ -1,14 +1,23 @@
 <script lang="ts">
-  import { icons } from 'svelte3-icons';
+  import { icons, IconBox, Aim, SvgIcon, Camera } from 'svelte3-icons';
+  import svelteSvg from './svelte.svg?raw';
+
   const components = Object.keys(icons);
+
   const copyIcon = (name: string) => {
     navigator.clipboard.writeText(`<${name} />`).then(() => {
       alert(`复制成功: <${name} />`);
-    }).catch((err) => {});
+    }).catch((err) => {
+
+    });
   }
 </script>
 
 <main>
+  <div>
+    <SvgIcon data={svelteSvg} size={20} />
+    <IconBox color="red" size={30}><Aim /></IconBox>
+  </div>
   {#each components as cpt}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class="icon" on:click={()=> copyIcon(cpt)}>
